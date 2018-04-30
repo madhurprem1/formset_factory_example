@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block content %}
+  <div class="col-md-12">
+    <p>
+      <a href="{% url 'invoicing:invoice_list' %}" class="btn btn-primary">Nugget List</a>
+    </p>
+  </div>
+  <br>
+  <div class="col-lg-12">
+   <form method="post" action="">{% csrf_token %}
+
+      {% bootstrap_form customer_form %}
+       {{  meal_form.primary.field.choices.1.1 }}
+
+{{ nugget_check_formset.non_form_errors }}
+
+      <fieldset>
+        <!-- <div class="form-container col-md-10 col-md-offset-1">
+          {% bootstrap_form meal_form %}
+
+          </div> -->
+
+{{ nugget_check_formset.management_form }}
+    
+          <div class="table col-md-10 ">
+          {% for nugget_check_form in nugget_check_formset.forms %}
+            <div class="formset" >
+              
+              <div class="col-md-10 col-md-offset-1"> <label>PRECHECK</label>{% bootstrap_field nugget_check_form.command_name show_label=False %}</div>
+              <div class="col-md-10 col-md-offset-1">{% bootstrap_field nugget_check_form.command_output show_label=False %}</div>
+              
+               {{ nugget_check_form.nested.management_form }}
+              {{ nugget_check_form.nested.non_form_errors }}
+
+              {% for nested_form in nugget_check_form.nested.forms %}
+                  <div class="formset2 col-md-9" >
+                   <div class="col-md-3  col-md-offset-1 item-form" >{% bootstrap_field nested_form.text_data show_label=False %}</div>
+                   <div class="col-md-3   item-form" >{% bootstrap_field nested_form.data_operator show_label=False %} </div>
+                   <div class="col-md-3   item-form" >{% bootstrap_field nested_form.data_type show_label=False %}</div>
+             </div>
+
+              <br/><br/>
+              {% endfor %}
+
+
+            
+              <div class=""></div>
+
+            </div>
+             <br/><br/>
+          {% endfor %}
+
+
+        <!--</fieldset>-->
+
+
+          <!--</div>-->
+
+          <!--<div class="form-container col-md-10 col-md-offset-1">-->
+          <!--{% bootstrap_form configcommand_form %}-->
+
+          <!--</div>-->
+      <!---->
+
+    <!--</div> -->
+    <!--  -->
+      <!--{{  meal_form.primary.field.choices.2.1 }}-->
+
+<!--{{ nugget_check_formset.non_form_errors }}-->
+
+      <!--<fieldset>-->
+
+
+<!--{{ nugget_check_formset.management_form }}-->
+          <!--<div class="table col-md-10 ">-->
+          <!--{% for nugget_check_form in nugget_check_formset.forms %}-->
+            <!--<div class="formset3" >-->
+
+              <!--<div class="col-md-10 col-md-offset-1">  <label>POSTCHECK</label>{% bootstrap_field nugget_check_form.command_name show_label=False set_placeholder=False %}</div>-->
+              <!--<div class="col-md-10 col-md-offset-1" style="color: red;">{% bootstrap_field nugget_check_form.command_output show_label=False %}</div>-->
+
+               <!--{{ nugget_check_form.nested.management_form }}-->
+              <!--{{ nugget_check_form.nested.non_form_errors }}-->
+
+              <!--{% for nested_form in nugget_check_form.nested.forms %}-->
+                  <!--<div class="formset4 col-md-9" >-->
+                   <!--<div class="col-md-3  col-md-offset-1 item-form" >{% bootstrap_field nested_form.text_data show_label=False %}</div>-->
+                   <!--<div class="col-md-3   item-form" >{% bootstrap_field nested_form.data_operator show_label=False %} </div>-->
+                   <!--<div class="col-md-3   item-form" >{% bootstrap_field nested_form.data_type show_label=False %}</div>-->
+                  <!--</div>-->
+
+              <!--<br/><br/>-->
+              <!--{% endfor %}-->
+
+
+            <!---->
+              <!--<div class=""></div>-->
+            <!--</div>-->
+            </div>
+             <br/><br/>
+          <!--{% endfor %}-->
+<!--  -->
+      </fieldset>
+    <div class="col-lg-12">
+
+      {% buttons %}
+        <button type="submit" class="btn btn-primary pull-right">{% bootstrap_icon "star" %} Create Nugget</button>
+      {% endbuttons %}
+    </div>
+    </form>
+  </div>
+
+{% endblock %}
+
+{% block js %}
+  <script src="{% static 'js/jquery.formset.min.js' %}"></script>
+  <script src="{% static 'js/invoice_form.js' %}"></script>
+{% endblock %}
